@@ -1,9 +1,7 @@
-import React, { useReducer, useEffect, useState, useRef } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import Image from 'react-bootstrap/Image';
-import Container from 'react-bootstrap/Container';
 
-import { validate } from '../util/validators';
+import { validate } from '../utils/validators';
 
 const inputReducer = (state, action) => {
     switch (action.type) {
@@ -145,25 +143,6 @@ const Input = (props) => {
                     <option value="">{props.defaultOption}</option>
                     {props.options.map((option, index) => <option key={index}>{option}</option>)}
                 </Form.Select>
-                {!inputState.isValid && inputState.isTouched && (
-                    <Form.Text className="text-danger d-block">{props.errorText || 'This field is required.'}</Form.Text>
-                )}
-                <Form.Text className="text-muted">{props.extraText}</Form.Text>
-            </Form.Group>
-            break;
-            element = <Form.Group className="mb-4">
-                <Form.Label className={`${isInputInvalid && "text-danger"}`}>{props.label}</Form.Label>
-                <Select
-                    defaultValue={props.initialValue}
-                    onChange={props.setSelected}
-                    options={props.options}
-                    isMulti={true}
-                    allowSelectAll={true}
-                    closeMenuOnSelect={false}
-                    hideSelectedOptions={true}
-                    placeholder={props.defaultOption}
-                    noOptionsMessage={props.noOptionsMessage}
-                />
                 {!inputState.isValid && inputState.isTouched && (
                     <Form.Text className="text-danger d-block">{props.errorText || 'This field is required.'}</Form.Text>
                 )}
