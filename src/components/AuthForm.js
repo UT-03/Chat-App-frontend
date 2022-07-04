@@ -99,9 +99,6 @@ const AuthForm = (props) => {
                     auth.login(res.token, res.userId);
                     return res.userId;
                 })
-                .then((userId) => {
-                    // socket.emit('user active', { userId: userId });
-                })
                 .then(() => {
                     navigate('/');
                 })
