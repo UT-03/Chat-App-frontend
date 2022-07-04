@@ -111,7 +111,7 @@ const AuthForm = (props) => {
                 error={error}
                 show={!!error}
                 onHide={clearError} />
-            <Container>
+            <Container className="w-50 mx-auto mt-5">
                 <Form onSubmit={authSubmitHandler}>
                     {!isLoginMode && (
                         <Input

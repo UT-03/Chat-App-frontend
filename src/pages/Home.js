@@ -33,9 +33,6 @@ const Home = () => {
         fetchAllUsers();
     }, []);
 
-    useEffect(() => {
-    }, [selectedChat]);
-
     return (
         <React.Fragment>
             <ErrorModal
@@ -49,7 +46,10 @@ const Home = () => {
                             <ListGroup className="rounded-0">
                                 {users.map(user => {
                                     return (
-                                        <ListGroup.Item key={user._id} onClick={() => setSelectedChat(user._id)}>
+                                        <ListGroup.Item
+                                            className={`${selectedChat === user._id ? 'bg-secondary text-white' : ''}`}
+                                            key={user._id}
+                                            onClick={() => setSelectedChat(user._id)}>
                                             <Row>
                                                 <Col xs={12} className="px-0" style={{ cursor: "pointer" }}>{user.name}</Col>
                                             </Row>

@@ -21,7 +21,6 @@ const Header = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ms-auto">
-                            <Nav.Link className="me-2" as={Link} to="/">Home</Nav.Link>
                             {auth.isLoggedIn ? (
                                 <Button onClick={() => {
                                     socket.emit("user inactive", { userId: auth.userId })
