@@ -1,15 +1,13 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const useAuth = (socket) => {
+export const useAuth = () => {
     const [token, setToken] = useState();
     const [userId, setUserId] = useState();
 
     const navigate = useNavigate();
 
     const login = useCallback((token, userId) => {
-        if (!socket)
-            return;
 
         setToken(token);
         setUserId(userId);
@@ -21,17 +19,12 @@ export const useAuth = (socket) => {
                 userId: userId
             })
         );
-
-        socket.emit("user-active", { userId: userId });
     }, []);
 
     const logout = useCallback(() => {
-        const userId$ = userId;
         setToken(null);
         setUserId(null);
         localStorage.removeItem('chat-app-user-details');
-
-        socket.emit("user inactive", { userId: userId$ });
 
         navigate('/');
     }, []);
