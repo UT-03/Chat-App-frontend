@@ -10,8 +10,9 @@ import SocketContext from '../context/SocketContext';
 const ChatContainer = ({ selectedChat }) => {
     const [chatMessages, setChatMessages] = useState();
     const [messageText, setMessageText] = useState('');
+    const [loadingMessages, setLoadingMessages] = useState(false);
 
-    const { isLoading, sendRequest } = useHttpClient();
+    const { sendRequest } = useHttpClient();
 
     const auth = useContext(AuthContext);
 
@@ -32,6 +33,7 @@ const ChatContainer = ({ selectedChat }) => {
 
     useEffect(() => {
         if (selectedChat) {
+            setLoadingMessages(true);
             sendRequest(`${process.env.REACT_APP_BACKEND_URL}/api/user/messages/${selectedChat}`,
                 'GET',
                 null,
@@ -42,6 +44,7 @@ const ChatContainer = ({ selectedChat }) => {
             )
                 .then(({ messages }) => {
                     setChatMessages(messages);
+                    setLoadingMessages(false);
                 })
         }
     }, [selectedChat]);
@@ -50,7 +53,7 @@ const ChatContainer = ({ selectedChat }) => {
         <React.Fragment>
             {selectedChat ? (
                 <React.Fragment>
-                    {isLoading ? (
+                    {loadingMessages ? (
                         <h6>Loading...</h6>
                     ) : (
                         <React.Fragment>
