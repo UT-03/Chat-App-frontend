@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -11,6 +11,8 @@ const ChatContainer = ({ selectedChat }) => {
     const [chatMessages, setChatMessages] = useState();
     const [messageText, setMessageText] = useState('');
     const [loadingMessages, setLoadingMessages] = useState(false);
+
+    const scrollRef = useRef();
 
     const { sendRequest } = useHttpClient();
 
@@ -49,6 +51,10 @@ const ChatContainer = ({ selectedChat }) => {
         }
     }, [selectedChat]);
 
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [chatMessages]);
+
     return (
         <React.Fragment>
             {selectedChat ? (
@@ -59,11 +65,13 @@ const ChatContainer = ({ selectedChat }) => {
                         <React.Fragment>
                             <Row style={{
                                 height: "90%",
-                                overflow: "auto"
+                                overflow: "auto",
+                                flexWrap: "nowrap"
                             }} className="d-flex flex-column p-3">
                                 {chatMessages && chatMessages.map((msg, index) => {
                                     return (
                                         <Row
+                                            ref={scrollRef}
                                             key={index}
                                             className={`mx-0 py-2 px-3 my-1 rounded-5 text-white ${msg.fromSelf ? 'bg-primary' : 'bg-secondary'}`}
                                             style={{
